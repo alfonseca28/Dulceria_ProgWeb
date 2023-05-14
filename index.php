@@ -80,7 +80,7 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <p class="card-text"><?php echo number_format($row['PRODUCTO_PRECIO'], 2, '.', '.'); ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="details.php?id=<?php echo $row['PRODUCTO_ID'];?>&token=<?php echo hash_hmac('sha1', $row['PRODUCTO_ID'], KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
+                                        <a href="details.php?id=<?php echo $row['PRODUCTO_ID']; ?>&token=<?php echo hash_hmac('sha1', $row['PRODUCTO_ID'], KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
                                     </div>
                                     <a href="" class="btn btn-success">Agregar</a>
                                 </div>
