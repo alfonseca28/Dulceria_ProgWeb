@@ -50,9 +50,10 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li class="nav-item">
                             <a href="#" class="nav-link">Contacto</a>
                         </li>
-
-                        <a href="carrito.php" class="btn btn-primary">Carrito</a>
                     </ul>
+                    <a href="carrito.php" class="btn btn-primary">
+                        Carrito<span id="num_cart" class="badge bg-secondary"> <?php echo $num_cart; ?></span>
+                    </a>
                 </div>
             </div>
         </div>

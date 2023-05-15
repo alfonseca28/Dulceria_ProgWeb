@@ -86,9 +86,10 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li class="nav-item">
                             <a href="#" class="nav-link">Contacto</a>
                         </li>
-
-                        <a href="carrito.php" class="btn btn-primary">Carrito</a>
                     </ul>
+                    <a href="carrito.php" class="btn btn-primary">
+                        Carrito<span id="num_cart" class="badge bg-secondary"> <?php echo $num_cart; ?></span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -109,7 +110,7 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </p>
                     <div class="d-grid gap-3 col-10 mx-auto">
                         <button class="btn btn-primary" type="button">Comprar ahora</button>
-                        <button class="btn btn-outline-primary" type="button">Agregar al carrito</button>
+                        <button class="btn btn-outline-primary" type="button" onclick="addProducto(<?php echo $id; ?>, '<?php echo $token_tmp ?>')">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
@@ -118,6 +119,27 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Con el siguiente script se nos dara la facilidad de darle funcionalidad de javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <script>
+        function addProducto(id, token) {
+            let url = 'clases/carrito.php'
+            let formData = new FormData()
+            formData.append('id', id)
+            formData.append('token', token)
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    mode: "cors"
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        let elemento = document.getElementById("num_cart")
+                        elemento.innerHTML = data.numero
+                    }
+                })
+        }
+    </script>
 </body>
 
 </html>
