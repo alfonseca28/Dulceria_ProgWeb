@@ -4,11 +4,21 @@ require_once("config/database.php"); // Incluye el archivo database.php
 
 $pdo = conectar(); // Llama a la función conectar() y almacena el objeto de conexión en una variable
 
-// La consulta de abajo es dinamica en el sentido de que mientras los productos registrados en la base de datos esten arctivo estos se mostraran en la pagina (PRODUCTO_STATUS=1)
-$query = "SELECT PRODUCTO_ID, PRODUCTO_NOMBRE, PRODUCTO_PRECIO, PRODUCTO_DETALLES FROM producto WHERE PRODUCTO_STATUS=1";
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-$resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$productos = isset($_SESSION['carrito']['productos']) ? $_SESSION['carrito']['productos'] : null;
+// Imprime los productos que estan en el carrito por sesion
+print_r($_SESSION);
+
+$lista_carrito = array();
+
+if ($productos != null) {
+    foreach ($productos as $clave => $cantidad) {
+        // La consulta de abajo es dinamica en el sentido de que mientras los productos registrados en la base de datos esten arctivo estos se mostraran en la pagina (PRODUCTO_STATUS=1)
+        $query = "SELECT PRODUCTO_ID, PRODUCTO_NOMBRE, PRODUCTO_PRECIO, PRODUCTO_DETALLES, $cantidad AS cantidad FROM producto WHERE PRODUCTO_ID=? AND PRODUCTO_STATUS=1";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$clave]);
+        $lista_carrito[] = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+}
 
 // Borrar productos del carrito
 //session_destroy();
@@ -67,34 +77,42 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <main>
         <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <?php foreach ($resultados as $row) { ?>
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <!-- Seleccionar imagen en base al id del producto -->
-                            <?php
-                            $id = $row['PRODUCTO_ID'];
-                            $imagen = "img/productos/{$id}/principal.jpg";
-
-                            if (!file_exists($imagen)) {
-                                $imagen = "img/productos/no-photo.jpg";
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($lista_carrito == null) {
+                            echo '<tr><td colspan="5" class=""text-center><b>Lista vacia</b></td> </tr>';
+                        } else {
+                            $total = 0;
+                            foreach ($lista_carrito as $producto) {
+                                $_id = $producto['PRODUCTO_ID'];
+                                $_nombre = $producto['PRODUCTO_NOMBRE'];
+                                $_precio = $producto['PRODUCTO_PRECIO'];
+                                $_subtotal = $_precio * $producto['cantidad'];
+                                $total += $_subtotal;
                             }
-                            ?>
-                            <img src="<?php echo $imagen; ?>">
-                            <!-- Formateo para los datos del producto dinamico -->
-                            <div class="card-body">
-                                <h5 class="card-tittle"><?php echo $row['PRODUCTO_NOMBRE'] ?></h5>
-                                <p class="card-text"><?php echo number_format($row['PRODUCTO_PRECIO'], 2, '.', '.'); ?></p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="details.php?id=<?php echo $row['PRODUCTO_ID']; ?>&token=<?php echo hash_hmac('sha1', $row['PRODUCTO_ID'], KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
-                                    </div>
-                                    <button class="btn btn-outline-success" type="button" onclick="addProducto(<?php echo $row['PRODUCTO_ID']; ?>, '<?php echo hash_hmac('sha1', $row['PRODUCTO_ID'], KEY_TOKEN); ?>')">Agregar al carrito</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
+                        }
+                        ?>
+                        <tr>
+                            <td> <?php echo $nombre; ?> </td>
+                            <td> <?php echo MONEDA.number_format($precio,2,'.',','); ?> </td>
+                            <td>
+                                <input type="number" min="1" max="10" step="1" value="<?php echo $cantidad; ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange=""></input>
+                            </td>
+                            <td>
+                                <div id="subtotal_<?php echo $_id; ?>" ></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
     </main>
 
