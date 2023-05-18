@@ -6,7 +6,7 @@ $pdo = conectar(); // Llama a la función conectar() y almacena el objeto de con
 
 $productos = isset($_SESSION['carrito']['productos']) ? $_SESSION['carrito']['productos'] : null;
 // Imprime los productos que estan en el carrito por sesion
-print_r($_SESSION);
+// print_r($_SESSION);
 
 $lista_carrito = array();
 
@@ -104,7 +104,7 @@ if ($productos != null) {
                                     <td><?php echo $_nombre; ?></td>
                                     <td><?php echo MONEDA . number_format($_precio, 2, '.', ','); ?></td>
                                     <td>
-                                        <input type="number" min="1" max="10" step="1" value="<?php echo $_cantidad; ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange=""></input>
+                                        <input type="number" min="1" max="10" step="1" value="<?php echo $_cantidad; ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange="actualizaCantidad(this.value, <?php echo $_id; ?>)"></input>
                                     </td>
                                     <td>
                                         <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . number_format($_subtotal, 2, '.', ','); ?></div>
@@ -137,11 +137,12 @@ if ($productos != null) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <script>
-        function addProducto(id, token) {
-            let url = 'clases/carrito.php'
+        function actualizaCantidad(cantidad, id) {
+            let url = 'clases/actualizar_carrito.php'
             let formData = new FormData()
+            formData.append('action', 'agregar')
             formData.append('id', id)
-            formData.append('token', token)
+            formData.append('cantidad', cantidad)
 
             fetch(url, {
                     method: 'POST',
@@ -150,8 +151,24 @@ if ($productos != null) {
                 }).then(response => response.json())
                 .then(data => {
                     if (data.ok) {
-                        let elemento = document.getElementById("num_cart")
-                        elemento.innerHTML = data.numero
+
+                        let divsubtotal = document.getElementById('subtotal_' + id)
+                        divsubtotal.innerHTML = data.sub
+
+                        let total = 0.00
+                        let list = document.getElementsByName('subtotal[]')
+
+                        for (let i = 0; i < list.length; i++) {
+                            total += parseFloat(list[i].innerHTML.replace(/[$,]/g, ''));
+                        }
+
+                        total = new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2
+                        }).format(total)
+                        document.getElementById('total').innerHTML = '<?php echo MONEDA; ?>' + total
+
+                        // let elemento = document.getElementById("num_cart")
+                        // elemento.innerHTML = data.numero
                     }
                 })
         }
