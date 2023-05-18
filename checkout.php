@@ -109,7 +109,7 @@ if ($productos != null) {
                                     <td>
                                         <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . number_format($_subtotal, 2, '.', ','); ?></div>
                                     </td>
-                                    <td><a href="#" id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="eliminaModal">Eliminar</a></td>
+                                    <td><a href="#" id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal">Eliminar</a></td>
                                 </tr>
                             <?php } ?>
 
@@ -132,11 +132,39 @@ if ($productos != null) {
             </div>
         </div>
     </main>
+    <!-- Modal -->
+    <div class="modal fade" id="eliminaModal" tabindex="-1" aria-labelledby="eliminaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="eliminaModalLabel">Alerta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Desea eliminar el prducto actual del carrito?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button id="btn-elimina" type="button" class="btn btn-danger" onclick="eliminar()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Con el siguiente script se nos dara la facilidad de darle funcionalidad de javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <script>
+        let eliminaModal = document.getElementById('eliminaModal')
+
+        eliminaModal.addEventListener('show.bs.modal', function(event) {
+            let button = event.relatedTarget
+
+            let id = button.getAttribute('data-bs-id')
+            let buttonElimina = eliminaModal.querySelector('.modal-footer #btn-elimina')
+            buttonElimina.value = id
+        })
+
         function actualizaCantidad(cantidad, id) {
             let url = 'clases/actualizar_carrito.php'
             let formData = new FormData()
@@ -169,6 +197,26 @@ if ($productos != null) {
 
                         // let elemento = document.getElementById("num_cart")
                         // elemento.innerHTML = data.numero
+                    }
+                })
+        }
+
+        function eliminar() {
+            let botonElimina = document.getElementById('btn-elimina')
+            let id = botonElimina.value
+            let url = 'clases/actualizar_carrito.php'
+            let formData = new FormData()
+            formData.append('action', 'eliminar')
+            formData.append('id', id)
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    mode: "cors"
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        location.reload()
                     }
                 })
         }
