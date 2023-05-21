@@ -77,6 +77,7 @@ if ($productos != null) {
             <div class="row">
                 <div class="col-6">
                     <h4>Detalles de pago</h4>
+                    <div id="paypal-button-container"></div>
                 </div>
                 <div class="col-6">
                     <div class="table-responsive">
@@ -109,12 +110,10 @@ if ($productos != null) {
                                     <?php } ?>
 
                                     <tr>
-                                        <td colspan="3"></td>
                                         <td colspan="2">
-                                            <p class="h3" id="total"><?php echo MONEDA . number_format($total, 2, '.', ','); ?></p>
+                                            <p class="h3 text-end" id="total"><?php echo MONEDA . number_format($total, 2, '.', ','); ?></p>
                                         </td>
                                     </tr>
-
                             </tbody>
                         <?php } ?>
                         </table>
@@ -126,6 +125,51 @@ if ($productos != null) {
 
     <!-- Con el siguiente script se nos dara la facilidad de darle funcionalidad de javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>currency=<?php echo CURRENCY; ?>"></script>
+
+    <script>
+        paypal.Buttons({
+            style: {
+                shape: 'pill',
+                label: 'pay'
+            },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: <?php echo $total; ?>
+                        }
+                    }]
+                });
+            },
+            // A partir de aqui comienza lo que es la transacion al momento de pagar y que por consola del navegador nos muestre todos los detalles de la transacion
+            onApprove: function(data, actions) {
+                let URL = 'clases/captura.php'
+                actions.order.capture().then(function(detalles) {
+                    console.log(detalles);
+                    // let URL = 'clases/captura.php'
+                    return fetch(URL, {
+                        method: 'post',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            detalles: detalles
+                        })
+                    })
+
+                    // // Finalmente aqui se redirecciona a otra ventana para mostrar que se realizo correctamente el pago
+                    // window.location.href = "pay_completed.html"
+                });
+            },
+            // Esta funcion es para que al momento de cerrar la ventana emergente del pago, se cancele y nos muestre una alerta de que se cancelo el pago
+            onCancel: function(data) {
+                alert("Pago cancelado");
+                console.log(data);
+            }
+        }).render('#paypal-button-container');
+    </script>
 </body>
 
 </html>

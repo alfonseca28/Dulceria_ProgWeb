@@ -19,7 +19,6 @@ if ($productos != null) {
         $lista_carrito[] = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
-
 // Borrar productos del carrito
 //session_destroy();
 
