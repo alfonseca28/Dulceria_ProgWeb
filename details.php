@@ -66,7 +66,7 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <header data-bs-theme="dark">
         <div class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a href="#" class="navbar-brand">
+                <a href="index.php" class="navbar-brand">
                     <img src="img/logo/logo_completo.png" width="150">
                     <strong>Dulcería - Purrfections</strong>
                 </a>
@@ -76,7 +76,7 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="collapse navbar-collapse" id="navbarHeader">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">Productos</a>
+                            <a href="index.php" class="nav-link active">Productos</a>
                         </li>
 
                         <li class="nav-item">
