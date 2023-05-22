@@ -41,15 +41,15 @@ if (is_array($datos)) {
                 $stmt = $pdo->prepare($query);
                 $stmt->execute([$clave]);
                 $row_prod = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
                 if ($row_prod) {
                     $_precio = $row_prod['PRODUCTO_PRECIO'];
-        
+
                     $sql_insert = $pdo->prepare("INSERT INTO detalle_compra (id_compra, PRODUCTO_ID, nombre, precio, cantidad) VALUES (?,?,?,?,?)");
                     $sql_insert->execute([$id, $clave, $row_prod['PRODUCTO_NOMBRE'], $_precio, $cantidad]);
                 }
             }
+            unset($_SESSION['carrito']);
         }
     }
 }
-?>
