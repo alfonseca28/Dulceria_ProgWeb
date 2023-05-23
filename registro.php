@@ -59,7 +59,7 @@ if (!empty($_POST)) {
     <header data-bs-theme="dark">
         <div class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a href="#" class="navbar-brand">
+                <a href="index.php" class="navbar-brand">
                     <img src="img/logo/logo_completo.png" width="150">
                     <strong>Dulcería - Purrfections</strong>
                 </a>
