@@ -144,7 +144,7 @@ if ($productos != null) {
                 });
             },
             // A partir de aqui comienza lo que es la transacion al momento de pagar y que por consola del navegador nos muestre todos los detalles de la transacion
-            onApprove: function(data, actions) {    
+            onApprove: function(data, actions) {
                 let URL = 'clases/captura.php'
                 actions.order.capture().then(function(detalles) {
                     console.log(detalles);
@@ -157,12 +157,9 @@ if ($productos != null) {
                         body: JSON.stringify({
                             detalles: detalles
                         })
-                    }).then(function(response){
-                        window.location.href="completado.html";
+                    }).then(function(response) {
+                        window.location.href = "completado.php?key=" + detalles['id'];
                     })
-
-                    // // Finalmente aqui se redirecciona a otra ventana para mostrar que se realizo correctamente el pago
-                    // window.location.href = "completado.html"
                 });
             },
             // Esta funcion es para que al momento de cerrar la ventana emergente del pago, se cancele y nos muestre una alerta de que se cancelo el pago
