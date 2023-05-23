@@ -157,9 +157,9 @@ if ($productos != null) {
                         body: JSON.stringify({
                             detalles: detalles
                         })
-                    })/*.then(function(response){
+                    }).then(function(response){
                         window.location.href="completado.html";
-                    })*/
+                    })
 
                     // // Finalmente aqui se redirecciona a otra ventana para mostrar que se realizo correctamente el pago
                     // window.location.href = "completado.html"
