@@ -9,9 +9,9 @@ $json = file_get_contents('php://input');
 $datos = json_decode($json, true);
 
 // Imprime los datos recibidos para verificarlos
-echo '<pre>';
-print_r($datos);
-echo '</pre>';
+// echo '<pre>';
+// print_r($datos);
+// echo '</pre>';
 
 // Datos del usuario de prueba para las compras en paypal
 // Correo: sb-7dypv25799975@personal.example.com
@@ -48,8 +48,10 @@ if (is_array($datos)) {
                     $sql_insert = $pdo->prepare("INSERT INTO detalle_compra (id_compra, PRODUCTO_ID, nombre, precio, cantidad) VALUES (?,?,?,?,?)");
                     $sql_insert->execute([$id, $clave, $row_prod['PRODUCTO_NOMBRE'], $_precio, $cantidad]);
                 }
+                include 'enviar_email.php';
             }
             unset($_SESSION['carrito']);
         }
     }
 }
+?>
