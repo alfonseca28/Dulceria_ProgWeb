@@ -131,6 +131,7 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="email"><span class="text-danger">*</span> Correo electronico</label>
                     <input type="email" name="email" id="email" class="form-control" required>
+                    <span id="validaEmail" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="telefono"><span class="text-danger">*</span> Telefono</label>
@@ -170,8 +171,33 @@ if (!empty($_POST)) {
             existeUsuario(txtUsuario.value);
         }, false)
 
+        let txtEmail = document.getElementById('email');
+        txtEmail.addEventListener("blur", function() {
+            existeEmail(txtEmail.value);
+        }, false)
+
+        function existeEmail(email) {
+            let url = "clases/clienteAjax.php";
+            let formData = new FormData();
+            formData.append("action", "existeEmail");
+            formData.append("email", email);
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('email').value = '';
+                        document.getElementById('validaEmail').innerHTML = 'Correo electronico no disponible';
+                    } else {
+                        document.getElementById('validaEmail').innerHTML = '';
+                    }
+                });
+        }
+
         function existeUsuario(usuario) {
-            let url = "clases/clienteAjax.php"; // Corregir la variable url
+            let url = "clases/clienteAjax.php";
             let formData = new FormData();
             formData.append("action", "existeUsuario");
             formData.append("usuario", usuario);
