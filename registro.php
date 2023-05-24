@@ -143,6 +143,7 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="usuario"><span class="text-danger">*</span> Usuario</label>
                     <input type="text" name="usuario" id="usuario" class="form-control" required>
+                    <span id="validaUsuario" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="password"><span class="text-danger">*</span> Contraseña</label>
@@ -162,6 +163,34 @@ if (!empty($_POST)) {
 
     <!-- Con el siguiente script se nos dara la facilidad de darle funcionalidad de javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <script>
+        let txtUsuario = document.getElementById('usuario');
+        txtUsuario.addEventListener("blur", function() {
+            existeUsuario(txtUsuario.value);
+        }, false)
+
+        function existeUsuario(usuario) {
+            let url = "clases/clienteAjax.php"; // Corregir la variable url
+            let formData = new FormData();
+            formData.append("action", "existeUsuario");
+            formData.append("usuario", usuario);
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('usuario').value = '';
+                        document.getElementById('validaUsuario').innerHTML = 'Usuario no disponible';
+                    } else {
+                        document.getElementById('validaUsuario').innerHTML = '';
+                    }
+                });
+        }
+    </script>
+
 
 </body>
 
