@@ -22,21 +22,46 @@ if (!empty($_POST)) {
     $password = trim($_POST['password']);
     $repassword = trim($_POST['repassword']);
 
-    $id = registraCliente([$nombre, $apellidos, $email, $telefono, $dni], $pdo);
+    // Funciones para las validaciones
+    if (esNulo([$nombre, $apellidos, $email, $telefono, $dni, $usuario, $password, $repassword])) {
+        $errors[] = "Debes de rellenar todos los campos para registrarte";
+    }
 
-    if ($id > 0) {
-        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
-        $token = generarToken();
-        if (registraUsuario([$usuario, $pass_hash, $token, $id], $pdo)) {
-            $errors[] = "Error al registrar el usuario";
-        }
-    } else {
-        $errors[] = "Error al registrar el cliente";
+    if (!esEmail($email)) {
+        $errors[] = "La direccion de correo no es valida";
     }
+
+    if (validaPassword($password, $repassword)) {
+        $errors[] = "Las contraseñas no coinciden";
+    }
+
+    if (usuarioExiste($usuario, $pdo)) {
+        $errors[] = "El nombre de usuario $usuario ya existe";
+    }
+
+    if (emailExiste($email, $pdo)) {
+        $errors[] = "El correo electronico $email ya esta asociado a una cuenta";
+    }
+
     if (count($errors) == 0) {
-    } else {
-        print_r($errors);
+
+        // Aqui comienza a registrar el cliente en la base de datos siempre y cuando escriba bien sus credenciales
+        $id = registraCliente([$nombre, $apellidos, $email, $telefono, $dni], $pdo);
+
+        if ($id > 0) {
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+            $token = generarToken();
+            if (registraUsuario([$usuario, $pass_hash, $token, $id], $pdo)) {
+                $errors[] = "Error al registrar el usuario";
+            }
+        } else {
+            $errors[] = "Error al registrar el cliente";
+        }
     }
+    // if (count($errors) == 0) {
+    // } else {
+    //     print_r($errors);
+    // }
 }
 ?>
 
@@ -91,6 +116,9 @@ if (!empty($_POST)) {
     <main>
         <div class="container">
             <h2>Datos del cliente</h2>
+            <!-- Aqui se van a mostrar los posibles errores en las validaciones del formulario -->
+            <?php mostrarMensajes($errors); ?>
+
             <form class="row g-3" action="registro.php" method="post" autocomplete="off">
                 <div class="col-md-6">
                     <label for="nombres"><span class="text-danger"></span> Nombres</label>
