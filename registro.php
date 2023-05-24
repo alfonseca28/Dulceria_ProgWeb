@@ -121,35 +121,35 @@ if (!empty($_POST)) {
 
             <form class="row g-3" action="registro.php" method="post" autocomplete="off">
                 <div class="col-md-6">
-                    <label for="nombres"><span class="text-danger"></span> Nombres</label>
+                    <label for="nombres"><span class="text-danger">*</span> Nombres</label>
                     <input type="text" name="nombres" id="nombres" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="apellidos"><span class="text-danger"></span> Apellidos</label>
+                    <label for="apellidos"><span class="text-danger">*</span> Apellidos</label>
                     <input type="text" name="apellidos" id="apellidos" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="email"><span class="text-danger"></span> Correo electronico</label>
+                    <label for="email"><span class="text-danger">*</span> Correo electronico</label>
                     <input type="email" name="email" id="email" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="telefono"><span class="text-danger"></span> Telefono</label>
+                    <label for="telefono"><span class="text-danger">*</span> Telefono</label>
                     <input type="tel" name="telefono" id="telefono" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="dni"><span class="text-danger"></span> DNI</label>
+                    <label for="dni"><span class="text-danger">*</span> DNI</label>
                     <input type="text" name="dni" id="dni" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="usuario"><span class="text-danger"></span> Usuario</label>
+                    <label for="usuario"><span class="text-danger">*</span> Usuario</label>
                     <input type="text" name="usuario" id="usuario" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="password"><span class="text-danger"></span> Contraseña</label>
+                    <label for="password"><span class="text-danger">*</span> Contraseña</label>
                     <input type="password" name="password" id="password" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="repassword"><span class="text-danger"></span> Repetir contraseña</label>
+                    <label for="repassword"><span class="text-danger">*</span> Repetir contraseña</label>
                     <input type="password" name="repassword" id="repassword" class="form-control" required>
                 </div>
 
