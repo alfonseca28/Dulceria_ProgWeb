@@ -32,45 +32,8 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-
-    <header data-bs-theme="dark">
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-            <div class="container">
-                <a href="#" class="navbar-brand">
-                    <img src="img/logo/logo_completo.png" width="150">
-                    <strong>Dulcería - Purrfections</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarHeader">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">Productos</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Sobre nosotros</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Contacto</a>
-                        </li>
-                    </ul>
-
-                    <a href="checkout.php" class="btn btn-primary me-2">
-                        Carrito<span id="num_cart" class="badge bg-secondary"> <?php echo $num_cart; ?></span>
-                    </a>
-                    <?php if (isset($_SESSION['user_id'])) { ?>
-                        <a href="#" class="btn btn-success"><?php echo $_SESSION['user_name']; ?></a>
-                    <?php } else { ?>
-                        <a href="login.php" class="btn btn-success">Ingresar</a>
-                    <?php } ?>
-
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Menu de navegacion -->
+    <?php include 'menu.php'; ?>
 
     <main>
         <div class="container">

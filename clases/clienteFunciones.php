@@ -83,16 +83,22 @@ function mostrarMensajes(array $errors)
     }
 }
 
-function login($usuario, $password, $con)
+function login($usuario, $password, $con, $proceso)
 {
-    $sql = $con->prepare("SELECT id, usuario, password FROM usuarios WHERE usuario LIKE ? LIMIT 1");
+    $sql = $con->prepare("SELECT id, usuario, id_cliente, password FROM usuarios WHERE usuario LIKE ? LIMIT 1");
     $sql->execute([$usuario]);
     if ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
         if (esActivo($usuario, $con)) {
             if (password_verify($password, $row['password'])) {
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $row['usuario'];
-                header("location: index.php");
+                $_SESSION['user_cliente'] = $row['id_cliente'];
+
+                if ($proceso == 'pago') {
+                    header("location: checkout.php");
+                } else {
+                    header("location: index.php");
+                }
                 exit;
             } else {
                 return 'El usuario y/o contraseña son incorrectos';
@@ -105,6 +111,7 @@ function login($usuario, $password, $con)
 }
 
 
+
 function esActivo($usuario, $con)
 {
     $sql = $con->prepare("SELECT activacion FROM usuarios WHERE usuario LIKE ? LIMIT 1");
@@ -115,4 +122,3 @@ function esActivo($usuario, $con)
     }
     return false;
 }
-?>

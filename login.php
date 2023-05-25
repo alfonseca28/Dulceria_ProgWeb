@@ -5,6 +5,8 @@ require 'clases/clienteFunciones.php';
 
 $pdo = conectar(); // Llama a la función conectar() y almacena el objeto de conexión en una variable
 
+$proceso = isset($_GET['pago']) ? 'pago' : 'login';
+
 // La consulta de abajo es dinamica en el sentido de que mientras los productos registrados en la base de datos esten arctivo estos se mostraran en la pagina (PRODUCTO_STATUS=1)
 // $query = "SELECT PRODUCTO_ID, PRODUCTO_NOMBRE, PRODUCTO_PRECIO, PRODUCTO_DETALLES FROM producto WHERE PRODUCTO_STATUS=1";
 // $stmt = $pdo->prepare($query);
@@ -15,6 +17,7 @@ $errors = [];
 if (!empty($_POST)) {
     $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);
+    $proceso = $_POST['proceso'] ?? 'login';
 
     // Funciones para las validaciones
     if (esNulo([$usuario, $password])) {
@@ -22,7 +25,7 @@ if (!empty($_POST)) {
     }
 
     if (count($errors) == 0) {
-        $errors[] = login($usuario, $password, $pdo);
+        $errors[] = login($usuario, $password, $pdo, $proceso);
     }
 }
 ?>
@@ -81,9 +84,12 @@ if (!empty($_POST)) {
         <h2>Iniciar sesion</h2>
         <?php mostrarMensajes($errors); ?>
         <form class="row g-3" action="login.php" method="post" autocomplete="off">
-            <div class="form-floating">
-                <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
-                <label for="usuario">Usuario</label>
+
+            <input type="hidden" name="proceso" value="<?php echo $proceso; ?>
+
+            <div class=" form-floating">
+            <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
+            <label for="usuario">Usuario</label>
             </div>
 
             <div class="form-floating">
