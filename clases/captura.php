@@ -8,15 +8,6 @@ $pdo = conectar(); // Llama a la función conectar() y almacena el objeto de con
 $json = file_get_contents('php://input');
 $datos = json_decode($json, true);
 
-// Imprime los datos recibidos para verificarlos
-// echo '<pre>';
-// print_r($datos);
-// echo '</pre>';
-
-// Datos del usuario de prueba para las compras en paypal
-// Correo: sb-7dypv25799975@personal.example.com
-// Contraseña: d_6zEv4C
-
 // Verifica si los datos son un array y luego extrae los valores relevantes del array para utilizarlos en la inserción en la base de datos
 if (is_array($datos)) {
     $id_transaccion = $datos['detalles']['id'];
@@ -50,7 +41,7 @@ if (is_array($datos)) {
                 }
                 include 'enviar_email.php';
             }
-            unset($_SESSION['carrito']);
+            unset($_SESSION['carrito']); // Vaciar el carrito eliminando la variable de sesión
         }
     }
 }
