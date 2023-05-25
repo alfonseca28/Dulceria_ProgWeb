@@ -57,9 +57,16 @@ $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="#" class="nav-link">Contacto</a>
                         </li>
                     </ul>
-                    <a href="checkout.php" class="btn btn-primary">
+
+                    <a href="checkout.php" class="btn btn-primary me-2">
                         Carrito<span id="num_cart" class="badge bg-secondary"> <?php echo $num_cart; ?></span>
                     </a>
+                    <?php if (isset($_SESSION['user_id'])) { ?>
+                        <a href="#" class="btn btn-success"><?php echo $_SESSION['user_name']; ?></a>
+                    <?php } else { ?>
+                        <a href="login.php" class="btn btn-success">Ingresar</a>
+                    <?php } ?>
+
                 </div>
             </div>
         </div>
