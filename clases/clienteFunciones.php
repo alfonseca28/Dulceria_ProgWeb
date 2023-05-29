@@ -122,3 +122,4 @@ function esActivo($usuario, $con)
     }
     return false;
 }
+?>
