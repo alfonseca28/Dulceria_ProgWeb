@@ -60,11 +60,13 @@ if ($id_transaccion == '') {
                         <li class="nav-item">
                             <a href="index.php" class="nav-link active">Productos</a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Sobre nosotros</a>
+                            <a href="about.php" class="nav-link">Sobre nosotros</a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Contacto</a>
+                            <a href="about.php" class="nav-link">Contacto</a>
                         </li>
                     </ul>
                     <a href="checkout.php" class="btn btn-primary">

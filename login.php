@@ -85,11 +85,11 @@ if (!empty($_POST)) {
         <?php mostrarMensajes($errors); ?>
         <form class="row g-3" action="login.php" method="post" autocomplete="off">
 
-            <input type="hidden" name="proceso" value="<?php echo $proceso; ?>
+            <input type="hidden" name="proceso" value="<?php echo $proceso; ?>">
 
             <div class=" form-floating">
-            <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
-            <label for="usuario">Usuario</label>
+                <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
+                <label for="usuario">Usuario</label>
             </div>
 
             <div class="form-floating">
