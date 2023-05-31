@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+
+	*{
+	font-family: 'Raleway', sans-serif;
+	}
+	.todo{
+		width: 100%;
+		max-width: 1800px;
+	}
+
+
+		header {
+			padding: 2px ;
+			background-color: #bda6d6;
+			display: flex;
+			border: 0px solid rgb(0, 0, 0);
+			border-top: none;
+			text-align: center;
+			justify-content: space-between;
+			height: 110px;
+		}
+		
+		.header .logo{
+			cursor: pointer;
+		}
+		.header .logo img{
+			height: 100px;
+			width: 210px;
+			transition: all 0.3s;
+			padding-left: 15px;
+		}
+
+		.header .logo img:hover{
+			transform: scale(1.15);
+		}
+		
+		/* ESTO ES PARA LA BARRA DE NAVEGACION SUPERIOR DE LA PAGINA */
+
+
+		.header .navi{
+			list-style: none;
+			border: none;
+			outline: none;
+		}
+
+		.header .navi li{
+			display: inline-block;
+			padding: 0 20px;
+			color: #786093;
+			border: none;
+			outline: none;
+			background: none;
+
+		}
+
+		.header .navi li:hover{
+			transform: scale(1.1) ;
+
+		}
+
+		.header .navi li a:hover{
+			color:#f0d796;
+		}
+
+		.header .navi a{
+			font-size: 700;
+			color: #786093;
+			text-decoration: none;
+			
+		}
+
+		.header .btn button{
+			font-weight: 700;
+			color: #333;
+			padding: 9px, 25px;
+			background:#f1e2ff ;
+			border: none;
+			border-radius: 7px;
+			cursor: pointer;
+			transition: all 0.5s ease 0s;
+			overflow: hidden;
+		}
+
+		.header .btn button:hover{
+			background-color:#fff6e4 ;
+			transform: scale(1.15);
+		}
+
+		.header .btn button span{
+			position: absolute;
+			background:rgb(110, 22, 198) ;
+			transition: 0.7s;
+		}
+
+		.imggato{
+			width: 200px;
+			height: 200px;
+			align-items:right;
+			justify-items: center;
+		}
+
+		/* Esto es para los botones con lineas 
+		
+											AQUI EMPIEZAN LOS HEADERS DE BOTONES
+
+
+		
+		.header .btn span:nth-child(1){
+			width: 100%;
+			height: 1.5px;
+			top: 0;
+			left:-100%;
+		}
+
+		.header .btn span:nth-child(2){
+			width: 100%;
+			height: 1.5px;
+			bottom: 0;
+			right:-100%;
+		}
+
+		.header .btn span:nth-child(3){
+			width: 1.5px;
+			height: 100%;
+			bottom: -100%;
+			left:0px;
+		}
+
+		.header .btn span:nth-child(4){
+			width: 1.5px;
+			height: 100%;
+			top: -100%;
+			right: 0px;
+		}
+
+		.header .btn:hover span:nth-child(1){
+			left: 0;
+		}
+
+		.header .btn:hover span:nth-child(2){
+			right: 0;
+		}
+
+		.header .btn:hover span:nth-child(3){
+			bottom: 0;
+		}
+
+		.header .btn:hover span:nth-child(4){
+			top: 0;
+		}
+		
+		
+		
+										AQUI TERMINAN LOS HEADERS DE BOTONES 
+		
+		*/
+
+
+		body {
+			
+			font-size: 15px;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			background-color: rgba(255,247,227,255);
+		}
+
+		.cajitas{
+			width: 1000px;
+			display:flex;
+			justify-content:left;
+			justify-items: center;
+			flex-wrap:nowrap;
+			
+		}
+
+		.caja{
+			width: 100%;
+			margin: 30px;
+			background-color: lightgray;
+			border-radius: 35px;
+			
+		}
+
+		.productos{
+			width: 100%;
+			text-align: center;	
+			font-weight: bold;
+			margin: 30px;
+			font-size: 15px ;
+			
+		}
+		
+		.caja img{
+			width: 210px;
+			height: 210px;
+			border-radius: 30px;
+
+		}
+		.caja p{
+			text-align: center;
+		}
+
+		.botcar{
+
+			background-color: whitesmoke;
+			border:#bda6d6 1px;	
+			border-radius: 15px;
+
+		}
+
+		.caja1{
+			background-color: lightgray;
+			border-radius: 35px;
+
+		}
+
+		.caja2{
+			background-color: lightgray;
+			border-radius: 35px;
+		}
+
+		.caja3{
+			background-color: lightgray;
+			border-radius: 35px;
+		}
+
+		.caja4{
+			background-color: lightgray;
+			border-radius: 35px;
+		}
+		.caja5{
+			background-color: lightgray;
+			border-radius: 35px;
+		}
+		.textini {
+			width: 800px;
+			float: left;
+		}
+
+		.prod{
+			width: 1200px;
+
+		}
+
+		.contac {
+			width: 700px;
+		}
+
+		#titulosup {
+			font-size: 15px;
+			background-color: bisque;
+		}
+		.tab {
+			
+			padding: 20px;
+			background-color: #fff6e4;
+			border: 0px solid rgb(0, 0, 0);
+			border-top: none;
+			text-align: center;
+			font-size: 22px;
+		}
+		.tab.active {
+			display: block;
+			text-align: left ;
+		}
+		.tab-button {
+			text-align:center;
+			background-color: rgb(255, 193, 193);
+			color: #333;
+			display: inline-block;
+			padding: 10px 20px;
+			margin-right: 10px;
+			cursor: pointer;
+			border: none;
+			border-radius: 15px;
+		}
+		.tab-button.active {
+			background-color: rgb(251, 195, 188);
+			color: #fff;
+		}
+
+		#choco { 
+			float:left;
+			margin-right:50px;
+			margin-left: 0px;
+			border-radius: 50px;
+		}
+
+		.tab1 {
+			text-align: center;
+		}
+
+		#fondobot{
+			background-color: #fff6e4;
+		}	
+
+		.carro{
+				background-color: rgb(251, 195, 188);
+				color: #fff;
+				display: inline-block;
+			padding: 6px 5px 0px 5px;
+			margin-right: 10px;
+			cursor: pointer;
+			border: none;
+			border-radius: 15px;
+			height: 50px;
+			width: 50px;
+		}
+
+		.user{
+			background-color: rgb(251, 195, 188);
+			color: #fff;
+			display: inline-block;
+		padding: 6px 5px 0px 5px;
+		margin-right: 10px;
+		cursor: pointer;
+		border: none;
+		border-radius: 15px;
+		height: 50px;
+		width: 50px;
+	}
+
+
+
+
+
+
+
+

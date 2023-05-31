@@ -1,7 +1,7 @@
 <header data-bs-theme="dark">
     <div class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="#" class="navbar-brand">
+            <a href="index.php" class="navbar-brand">
                 <img src="img/logo/logo_completo.png" width="150">
                 <strong>Dulcería - Purrfections</strong>
             </a>
@@ -15,11 +15,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Sobre nosotros</a>
+                        <a href="about.php" class="nav-link">Sobre nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Contacto</a>
+                        <a href="about.php" class="nav-link">Contacto</a>
                     </li>
                 </ul>
 
