@@ -5,18 +5,23 @@ require_once("config/database.php"); // Incluye el archivo database.php
 $pdo = conectar(); // Llama a la función conectar() y almacena el objeto de conexión en una variable
 
 $productos = isset($_SESSION['carrito']['productos']) ? $_SESSION['carrito']['productos'] : null;
-// Imprime los productos que estan en el carrito por sesion
-// print_r($_SESSION);
 
 $lista_carrito = array();
 
 if ($productos != null) {
     foreach ($productos as $clave => $cantidad) {
-        // La consulta de abajo es dinamica en el sentido de que mientras los productos registrados en la base de datos esten arctivo estos se mostraran en la pagina (PRODUCTO_STATUS=1)
         $query = "SELECT PRODUCTO_ID, PRODUCTO_NOMBRE, PRODUCTO_PRECIO, PRODUCTO_DETALLES, $cantidad AS cantidad FROM producto WHERE PRODUCTO_ID=? AND PRODUCTO_STATUS=1";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$clave]);
-        $lista_carrito[] = $stmt->fetch(PDO::FETCH_ASSOC);
+        $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+        $lista_carrito[] = $producto;
+
+        // Restar la cantidad de productos comprados de la base de datos
+        $sql_update = "UPDATE producto SET PRODUCTO_CANTIDAD = PRODUCTO_CANTIDAD - :cantidad WHERE PRODUCTO_ID = :id";
+        $stmt_update = $pdo->prepare($sql_update);
+        $stmt_update->bindParam(':cantidad', $cantidad);
+        $stmt_update->bindParam(':id', $clave);
+        $stmt_update->execute();
     }
 } else {
     header("Location: index.php");
