@@ -1,31 +1,50 @@
 <?php
 require 'config/config.php';
-require_once("config/database.php"); // Incluye el archivo database.php
+require_once("config/database.php");
 
-$pdo = conectar(); // Llama a la función conectar() y almacena el objeto de conexión en una variable
+$pdo = conectar();
 
 $productos = isset($_SESSION['carrito']['productos']) ? $_SESSION['carrito']['productos'] : null;
-
 $lista_carrito = array();
+$stock_suficiente = true; // Variable para verificar si hay suficiente stock para los productos en el carrito
 
 if ($productos != null) {
     foreach ($productos as $clave => $cantidad) {
-        $query = "SELECT PRODUCTO_ID, PRODUCTO_NOMBRE, PRODUCTO_PRECIO, PRODUCTO_DETALLES, $cantidad AS cantidad FROM producto WHERE PRODUCTO_ID=? AND PRODUCTO_STATUS=1";
+        // Obtener información del producto
+        $query = "SELECT PRODUCTO_ID, PRODUCTO_NOMBRE, PRODUCTO_PRECIO, PRODUCTO_DETALLES, PRODUCTO_STOCK FROM producto WHERE PRODUCTO_ID=? AND PRODUCTO_STATUS=1";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$clave]);
         $producto = $stmt->fetch(PDO::FETCH_ASSOC);
-        $lista_carrito[] = $producto;
 
-        // Restar la cantidad de productos comprados de la base de datos
-        $sql_update = "UPDATE producto SET PRODUCTO_CANTIDAD = PRODUCTO_CANTIDAD - :cantidad WHERE PRODUCTO_ID = :id";
-        $stmt_update = $pdo->prepare($sql_update);
-        $stmt_update->bindParam(':cantidad', $cantidad);
-        $stmt_update->bindParam(':id', $clave);
-        $stmt_update->execute();
+        // Verificar el stock del producto
+        if ($producto && $producto['PRODUCTO_STOCK'] >= $cantidad) {
+            $producto['cantidad'] = $cantidad;
+            $lista_carrito[] = $producto;
+
+            // Restar la cantidad de productos comprados de la base de datos
+            $sql_update = "UPDATE producto SET PRODUCTO_STOCK = PRODUCTO_STOCK - :cantidad WHERE PRODUCTO_ID = :id";
+            $stmt_update = $pdo->prepare($sql_update);
+            $stmt_update->bindParam(':cantidad', $cantidad);
+            $stmt_update->bindParam(':id', $clave);
+            $stmt_update->execute();
+        } else {
+            // No hay suficiente stock para el producto
+            $stock_suficiente = false;
+            header("Location: no_stock.php");
+            break;
+        }
     }
 } else {
     header("Location: index.php");
     exit;
+}
+
+if (!$stock_suficiente) {
+    // Guardar los productos en una variable de sesión
+    $_SESSION['carrito']['productos'] = $productos;
+
+    // Mostrar mensaje de stock insuficiente
+    echo "<script>alert('No hay suficiente stock para uno o más productos.');</script>";
 }
 ?>
 
