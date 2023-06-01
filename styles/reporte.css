@@ -1,0 +1,28 @@
+/* styles/report.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    /* Agrega esta línea para centrar la tabla */
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        min-width: 150px;
+    }
+}

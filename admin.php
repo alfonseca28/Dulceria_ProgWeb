@@ -1,6 +1,6 @@
 <?php
 require 'config/config.php';
-require_once("config/database.php"); // Incluye el archivo database.php
+require_once("config/database.php");
 ?>
 
 <!DOCTYPE html>
@@ -14,9 +14,8 @@ require_once("config/database.php"); // Incluye el archivo database.php
     <!-- Se crea el link para que la pagina pueda realizar las utilidades de bootstrap y poder tomar algunos ejemplos de css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <!-- Se incluye la hoja de estilos a la pagina -->
-    <link rel="stylesheet" href="styles/no_stock.css">
+    <link rel="stylesheet" href="styles/admin.css">
 </head>
-
 
 <body>
     <header data-bs-theme="dark">
@@ -34,31 +33,30 @@ require_once("config/database.php"); // Incluye el archivo database.php
                         <li class="nav-item">
                             <a href="index.php" class="nav-link active">Productos</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Sobre nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Contacto</a>
-                        </li>
                     </ul>
-                    <a href="checkout.php" class="btn btn-primary">
-                        Carrito<span id="num_cart" class="badge bg-secondary"> <?php echo $num_cart; ?></span>
-                    </a>
                 </div>
             </div>
         </div>
     </header>
-    <div class="content_container">
-        <h1>Stock insuficiente</h1>
-        <p>No se puede procesar la compra debido a que hay stock insuficiente.</p>
-        <button onclick="redireccionar()">Regresar al carrito</button>
-    </div>
 
-    <script>
-        function redireccionar() {
-            window.location.href = "checkout.php";
-        }
-    </script>
+    <main>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <a href="clases\reporte_compras.php" class="btn btn-primary btn-lg btn-block mb-3">Ver compras</a>
+                </div>
+                <div class="col-12 col-md-4">
+                    <a href="clases\reporte_productos.php" class="btn btn-primary btn-lg btn-block mb-3">Ver productos</a>
+                </div>
+                <div class="col-12 col-md-4">
+                    <a href="#" class="btn btn-primary btn-lg btn-block mb-3">Agregar productos</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Con el siguiente script se nos dara la facilidad de darle funcionalidad de javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4UTjmlbUdyyw2Dz6c0+oPWVZKil/8Oqtn" crossorigin="anonymous"></script>
 </body>
 
 </html>
