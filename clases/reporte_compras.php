@@ -51,7 +51,7 @@ $compras = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <tr>
       <th>ID Transacción</th>
       <th>Fecha</th>
-      <th>Status</th>
+      <!-- <th>Status</th> -->
       <th>Email</th>
       <th>ID Cliente</th>
       <th>Total</th>
@@ -60,7 +60,7 @@ $compras = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <tr>
         <td><?php echo $compra['id_transaccion']; ?></td>
         <td><?php echo $compra['fecha']; ?></td>
-        <td><?php echo $compra['status']; ?></td>
+        <!-- <td><?php echo $compra['status']; ?></td> -->
         <td><?php echo $compra['email']; ?></td>
         <td><?php echo $compra['id_cliente']; ?></td>
         <td><?php echo $compra['total']; ?></td>

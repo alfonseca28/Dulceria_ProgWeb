@@ -49,7 +49,7 @@ require_once("config/database.php");
                     <a href="clases\reporte_productos.php" class="btn btn-primary btn-lg btn-block mb-3">Ver productos</a>
                 </div>
                 <div class="col-12 col-md-4">
-                    <a href="#" class="btn btn-primary btn-lg btn-block mb-3">Agregar productos</a>
+                    <a href="clases\add_productos.php" class="btn btn-primary btn-lg btn-block mb-3">Agregar productos</a>
                 </div>
             </div>
         </div>
